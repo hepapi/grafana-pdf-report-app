@@ -34,7 +34,7 @@ jobs:
           # Upload/Download artifacts wont preserve permissions
           # https://github.com/actions/upload-artifact?tab=readme-ov-file#permission-loss
           # Add +x bits on executables
-          # chmod -R +x dist/gpx_*
+          # chmod -R 0755 dist/gpx_* 
           
           mv dist cloudeteer-pdfreport-app
           zip cloudeteer-pdfreport-app.zip cloudeteer-pdfreport-app -r
