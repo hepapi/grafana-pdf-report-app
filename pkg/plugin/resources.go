@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"os" // Import the os package to read environment variables
 
 	"github.com/cloudeteer/grafana-pdf-report-app/pkg/plugin/dashboard"
 	"github.com/cloudeteer/grafana-pdf-report-app/pkg/plugin/report"
@@ -144,13 +145,37 @@ func (app *App) handleReport(w http.ResponseWriter, req *http.Request) {
 
 	grafanaAppURL = strings.TrimSuffix(grafanaAppURL, "/")
 
-	saToken, err := grafanaConfig.PluginAppClientSecret()
-	if err != nil {
-		ctxLogger.Error("failed to get plugin app client secret", "err", err)
-		http.Error(w, "failed to get plugin app client secret", http.StatusInternalServerError)
 
-		return
+
+	// Define the environment variable for the auth type.
+	const authTypeEnvVar = "GRAFANA_AUTH_TYPE"
+	// Get the auth type from the environment variable, defaulting to "Bearer".
+	authType := os.Getenv(authTypeEnvVar)
+	if authType == "" {
+		authType = "Bearer"
 	}
+
+	// Define the environment variable name to look for the token.
+	const tokenEnvVar = "GRAFANA_SA_TOKEN"
+	// Try to get the token from the environment variable.
+	tokenFromEnv := os.Getenv(tokenEnvVar)
+	
+	var finalToken string
+	if tokenFromEnv != "" {
+		// If the environment variable is set, use its value.
+		finalToken = tokenFromEnv
+	} 
+
+	if authType == "Bearer" && tokenEnvVar == "" {
+		saToken, err := grafanaConfig.PluginAppClientSecret()
+		if err != nil {
+			ctxLogger.Error("failed to get plugin app client secret", "err", err)
+			http.Error(w, "failed to get plugin app client secret", http.StatusInternalServerError)
+			return
+		}
+		finalToken = saToken
+	}
+
 
 	grafanaDashboard := dashboard.New(
 		ctxLogger,
@@ -161,7 +186,7 @@ func (app *App) handleReport(w http.ResponseWriter, req *http.Request) {
 		grafanaAppURL,
 		dashboardUID,
 		req.URL.Query(),
-		saToken,
+		finalToken,
 	)
 
 	// Make app new Grafana client to get dashboard JSON model and Panel PNGs
