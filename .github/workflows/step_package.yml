@@ -1,7 +1,9 @@
 name: package
 run-name: Package plugin
 
-on: {}
+on:
+  workflow_dispatch:
+    
 
 jobs:
   package:
