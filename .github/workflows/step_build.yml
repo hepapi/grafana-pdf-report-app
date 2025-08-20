@@ -12,8 +12,8 @@ on:
 jobs:
   build:
     environment: live
-    # env:
-      # GRAFANA_ACCESS_POLICY_TOKEN: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
+    env:
+      GRAFANA_ACCESS_POLICY_TOKEN: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
     name: build
     runs-on: ubuntu-latest
     steps:
