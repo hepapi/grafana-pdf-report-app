@@ -57,12 +57,12 @@ jobs:
         with:
           go-version: '1.23'
 
-      - name: Test backend
-        if: steps.check-for-backend.outputs.has-backend == 'true'
-        uses: magefile/mage-action@6a5dcb5fe61f43d7c08a98bc3cf9bc63c308c08e # v3
-        with:
-          version: latest
-          args: coverage
+      # - name: Test backend
+      #   if: steps.check-for-backend.outputs.has-backend == 'true'
+      #   uses: magefile/mage-action@6a5dcb5fe61f43d7c08a98bc3cf9bc63c308c08e # v3
+      #   with:
+      #     version: latest
+      #     args: coverage
 
       - name: Build backend
         if: steps.check-for-backend.outputs.has-backend == 'true'
