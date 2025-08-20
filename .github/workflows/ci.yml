@@ -2,12 +2,13 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   # All nested workflows will inherit these permissions and so no need to declare
