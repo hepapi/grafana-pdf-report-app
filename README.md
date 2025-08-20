@@ -388,16 +388,6 @@ configured service account token has broader permissions than the user making th
 the user _may_ generate reports of dashboards on the data sources that they do not
 have permissions to.
 
-## Examples
-
-Here are the example reports that are generated out of the test dashboards
-
-- [Report with portrait orientation, simple layout and full dashboard mode](https://github.com/cloudeteer/grafana-pdf-report-app/blob/main/docs/reports/report_portrait_simple_full.pdf)
-- [Report with landscape orientation, simple layout and full dashboard mode](https://github.com/cloudeteer/grafana-pdf-report-app/blob/main/docs/reports/report_landscape_simple_full.pdf)
-- [Report with portrait orientation, grid layout and full dashboard mode](https://github.com/cloudeteer/grafana-pdf-report-app/blob/main/docs/reports/report_portrait_grid_full.pdf)
-- [Report with landscape orientation, grid layout and full dashboard mode](https://github.com/cloudeteer/grafana-pdf-report-app/blob/main/docs/reports/report_landscape_grid_full.pdf)
-- [Report with portrait orientation, grid layout and default dashboard mode](https://github.com/cloudeteer/grafana-pdf-report-app/blob/main/docs/reports/report_portrait_grid_default.pdf)
-
 ## Troubleshooting
 
 - When TLS is enabled on Grafana server, `grafana-image-renderer` tends to throw
