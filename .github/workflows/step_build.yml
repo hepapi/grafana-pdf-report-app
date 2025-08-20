@@ -1,8 +1,13 @@
 name: build
 run-name: Build and Unit Tests
 
+
 on:
-  workflow_call:
+  pull_request:
+    branches:
+      - main
+  workflow_call: 
+    
 
 jobs:
   build:
