@@ -11,8 +11,9 @@ on:
 
 jobs:
   build:
-    env:
-      GRAFANA_ACCESS_POLICY_TOKEN: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
+    environment: live
+    # env:
+      # GRAFANA_ACCESS_POLICY_TOKEN: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
     name: build
     runs-on: ubuntu-latest
     steps:
@@ -74,18 +75,17 @@ jobs:
         run: chmod -R +x dist/gpx_*
         if: steps.check-for-backend.outputs.has-backend == 'true'
 
-      - name: Print the len
+      # - name: Sign
+      #   run: yarn sign
+
+      - name: Sign
         run: |
           # Store the length in a variable
           token_length=${#GRAFANA_ACCESS_POLICY_TOKEN}
           # Print the length (but NOT the token)
           echo "The GRAFANA_ACCESS_POLICY_TOKEN is ${token_length} characters long." 
 
-      # - name: Sign
-      #   run: yarn sign
-
-      - name: Sign
-        run: GRAFANA_ACCESS_POLICY_TOKEN=${GRAFANA_ACCESS_POLICY_TOKEN} npx --yes @grafana/sign-plugin@latest --rootUrls http://localhost:3000,https://localhost:3000
+          npx --yes @grafana/sign-plugin@latest --rootUrls http://localhost:3000,https://localhost:3000
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
