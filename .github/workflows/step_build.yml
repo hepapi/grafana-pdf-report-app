@@ -109,6 +109,10 @@ jobs:
           version: latest
           args: build
 
+      - name: Executable permissions
+        run: chmod -R +x dist/gpx_*
+        if: steps.check-for-backend.outputs.has-backend == 'true'
+        
       - name: Sign
         run: yarn sign
         env:
