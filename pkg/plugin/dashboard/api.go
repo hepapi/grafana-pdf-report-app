@@ -24,8 +24,32 @@ func (d *Dashboard) fetchAPI(ctx context.Context) (APIDashboardData, error) {
 		return APIDashboardData{}, fmt.Errorf("error creating request for %s: %w", dashURL.String(), err)
 	}
 
-	// Add the Authorization header
-	req.Header.Add("Authorization", "Bearer "+d.saToken)
+	// Define the environment variable name to look for the token.
+	const tokenEnvVar = "GRAFANA_SA_TOKEN"
+	// Define the environment variable for the auth type.
+	const authTypeEnvVar = "GRAFANA_AUTH_TYPE"
+	
+	// Try to get the token from the environment variable.
+	tokenFromEnv := os.Getenv(tokenEnvVar)
+	
+	var finalToken string
+	if tokenFromEnv != "" {
+		// If the environment variable is set, use its value.
+		finalToken = tokenFromEnv
+	} else {
+		// Otherwise, fall back to the original value from the struct.
+		finalToken = d.saToken
+	}
+
+
+	// Get the auth type from the environment variable, defaulting to "Bearer".
+	authType := os.Getenv(authTypeEnvVar)
+	if authType == "" {
+		authType = "Bearer"
+	}
+	
+	// Add the Authorization header with the chosen auth type and token.
+	req.Header.Add("Authorization", fmt.Sprintf("%s %s", authType, finalToken))
 
 	// Send the request
 	resp, err := d.httpClient.Do(req) //nolint:bodyclose //https://github.com/timakin/bodyclose/issues/30
