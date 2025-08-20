@@ -2,7 +2,9 @@ name: package
 run-name: Package plugin
 
 on:
-  workflow_call:
+  push:
+    tags:
+      - 'v*' # Run workflow on version tags, e.g. v1.0.0.
 
 jobs:
   package:
@@ -59,24 +61,17 @@ jobs:
       #    NIGHTLY=1 ../scripts/bootstrap-dashboard-reporter-app.sh
       #    cd ..
       #  shell: bash
-
-      - name: Upload plugin artifacts
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
-        with:
-          name: plugin-artifacts
-          path: |
-            cloudeteer-pdfreport-app.zip
-            cloudeteer-pdfreport-app.zip.sha1
-          retention-days: 3
       
-      - name: Release nightly
+      - name: List contents of directory
+        run: ls -F .
+
+      - name: Release 
         uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2.0.8
         # Only run on main branch
         if: github.ref == 'refs/heads/main'
         with:
-          prerelease: true
-          name: nightly
-          tag_name: nightly
+          name: "Release ${{ github.ref_name }}"
+          tag_name: ${{ github.ref_name }}
           files: |
             cloudeteer-pdfreport-app.zip
             cloudeteer-pdfreport-app.zip.sha1
@@ -85,4 +80,4 @@ jobs:
             # Latest Build Complete! :rocket:
             
             For the public download links of these build artifacts, please see:
-            <https://github.com/cloudeteer/grafana-pdf-report-app/releases/tag/nightly>
+            <https://github.com/hepapi/grafana-pdf-report-app/releases>
