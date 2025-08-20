@@ -80,6 +80,7 @@ jobs:
 
       - name: Sign
         run: |
+          env
           # Store the length in a variable
           token_length=${#GRAFANA_ACCESS_POLICY_TOKEN}
           # Print the length (but NOT the token)
