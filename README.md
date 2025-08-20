@@ -5,7 +5,6 @@
 This Grafana plugin app can create PDF reports of a given dashboard using headless `chromium`
 and [`grafana-image-renderer`](https://github.com/grafana/grafana-image-renderer).
 
-![Sample report](https://github.com/cloudeteer/grafana-pdf-report-app/blob/main/docs/pngs/sample_report.png)
 
 This plugin is based on the original work
 [grafana-reporter](https://github.com/IzakMarais/reporter) and 
@@ -25,9 +24,6 @@ improvements and modernization.
 
 - The plugin is capable of including all the repeated rows and/or panels in the
   generated report.
-
-- The plugin can be configured by Admins and users either from
-  [Configuration Page](https://github.com/cloudeteer/grafana-pdf-report-app/blob/main/src/img/light.png) or query parameters to the report API.
 
 
 A Grafana plugin to create PDF reports from dashboard panels. This app has been
@@ -138,7 +134,7 @@ After successful installation of the plugin, it will be, by default, disabled. W
 enable it in different ways.
 
 - From Grafana UI, navigating to `Apps > Dashboard Reporter App > Configuration` will
-show [this page](https://github.com/cloudeteer/grafana-pdf-report-app/blob/main/src/img/light.png)
+show [this page]()
 and plugin can be enabled there. The configuration page can also be
 accessed by URL `<Grafana URL>/plugins/cloudeteer-pdfreport-app`.
 
