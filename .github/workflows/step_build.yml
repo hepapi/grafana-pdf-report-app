@@ -115,8 +115,11 @@ jobs:
         run: chmod -R +x dist/gpx_*
         if: steps.check-for-backend.outputs.has-backend == 'true'
 
+      # - name: Sign
+      #   run: yarn sign
+
       - name: Sign
-        run: yarn sign
+        run: npx --yes @grafana/sign-plugin@latest --rootUrls http://localhost:3000,https://localhost:3000
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
