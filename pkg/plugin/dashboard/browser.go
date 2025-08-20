@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
+	"os"
 	"github.com/chromedp/cdproto/browser"
 	"github.com/chromedp/chromedp"
 	"github.com/cloudeteer/grafana-pdf-report-app/pkg/plugin/chrome"
@@ -105,7 +105,17 @@ func (d *Dashboard) fetchPanelDataFromBrowser(_ context.Context, dashURL string,
 	defer tab.Close(d.logger)
 
 	// Set the OAuth token in the headers
-	headers := map[string]any{backend.OAuthIdentityTokenHeaderName: "Bearer " + d.saToken}
+
+
+	// Define the environment variable for the auth type.
+	const authTypeEnvVar = "GRAFANA_AUTH_TYPE"
+	// Get the auth type from the environment variable, defaulting to "Bearer".
+	authType := os.Getenv(authTypeEnvVar)
+	if authType == "" {
+		authType = "Bearer"
+	}
+
+	headers := map[string]any{backend.OAuthIdentityTokenHeaderName: fmt.Sprintf("%s %s", authType, d.saToken)}
 
 	d.logger.Debug("Navigating to dashboard via browser", "url", dashURL)
 
@@ -208,8 +218,15 @@ func (d *Dashboard) fetchTableData(_ context.Context, panelURL string) (PanelTab
 
 	defer tab.Close(d.logger)
 
-	// Set the OAuth token in the headers
-	headers := map[string]any{backend.OAuthIdentityTokenHeaderName: "Bearer " + d.saToken}
+	// Define the environment variable for the auth type.
+	const authTypeEnvVar = "GRAFANA_AUTH_TYPE"
+	// Get the auth type from the environment variable, defaulting to "Bearer".
+	authType := os.Getenv(authTypeEnvVar)
+	if authType == "" {
+		authType = "Bearer"
+	}
+
+	headers := map[string]any{backend.OAuthIdentityTokenHeaderName: fmt.Sprintf("%s %s", authType, d.saToken)}
 
 	d.logger.Debug("fetch table data via browser", "url", panelURL)
 
