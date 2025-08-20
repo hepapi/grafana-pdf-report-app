@@ -70,7 +70,6 @@ jobs:
       - name: Release 
         uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2.0.8
         # Only run on main branch
-        if: github.ref == 'refs/heads/main'
         with:
           name: "Release ${{ github.ref_name }}"
           tag_name: ${{ github.ref_name }}
