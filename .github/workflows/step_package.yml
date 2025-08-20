@@ -1,10 +1,6 @@
 name: package
 run-name: Package plugin
 
-on:
-  push:
-    tags:
-      - 'v*' # Run workflow on version tags, e.g. v1.0.0.
 
 jobs:
   package:
