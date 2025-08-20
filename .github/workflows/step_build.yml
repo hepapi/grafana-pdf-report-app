@@ -109,10 +109,11 @@ jobs:
           version: latest
           args: build
 
-
       - name: Sign
         run: yarn sign
-
+        env:
+          GRAFANA_ACCESS_POLICY_TOKEN: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
+  
       - name: Upload build artifacts
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
         with:
