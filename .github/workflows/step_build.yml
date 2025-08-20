@@ -1,8 +1,8 @@
 name: build
 run-name: Build and Unit Tests
 
-# on:
-#   workflow_call:
+on:
+  workflow_call:
 
 jobs:
   build:
