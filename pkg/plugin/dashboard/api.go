@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os" // Import the os package to read environment variables
 )
 
 func (d *Dashboard) fetchAPI(ctx context.Context) (APIDashboardData, error) {
