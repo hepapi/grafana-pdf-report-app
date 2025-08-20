@@ -14,9 +14,7 @@ import (
 // it from the listing here.
 func Build() {
 	b := build.Build{}
-	// TODO: add these back later on 
-	// mg.Deps(b.Linux, b.Windows, b.Darwin, b.DarwinARM64, b.LinuxARM64, b.LinuxARM, b.GenerateManifestFile)
-	mg.Deps(b.Linux, b.GenerateManifestFile)
+	mg.Deps(b.Linux, b.Windows, b.Darwin, b.DarwinARM64, b.LinuxARM64, b.LinuxARM, b.GenerateManifestFile)
 }
 
 // Default configures the default target.
