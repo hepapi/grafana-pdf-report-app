@@ -72,16 +72,8 @@ func (d *Dashboard) fetchPNGFromGrafanaAPI(ctx context.Context, panelURL string)
 		return PanelImage{}, fmt.Errorf("error creating request for %s: %w", panelURL, err)
 	}
 
-	// Define the environment variable for the auth type.
-	const authTypeEnvVar = "GRAFANA_AUTH_TYPE"
-	// Get the auth type from the environment variable, defaulting to "Bearer".
-	authType := os.Getenv(authTypeEnvVar)
-	if authType == "" {
-		authType = "Bearer"
-	}
-	
 	// Add the Authorization header with the chosen auth type and token.
-	req.Header.Add("Authorization", fmt.Sprintf("%s %s", authType, d.saToken))
+	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", d.saToken))
 
 	d.logger.Debug("fetching panel PNG", "url", panelURL)
 

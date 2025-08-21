@@ -147,42 +147,22 @@ func (app *App) handleReport(w http.ResponseWriter, req *http.Request) {
 
 
 
-	// Define the environment variable for the auth type.
-	const authTypeEnvVar = "GRAFANA_AUTH_TYPE"
-	// Get the auth type from the environment variable, defaulting to "Bearer".
-	authType := os.Getenv(authTypeEnvVar)
-	if authType == "" {
-		authType = "Bearer"
-	}
-
-	// Define the environment variable name to look for the token.
-	const tokenEnvVar = "GRAFANA_SA_TOKEN"
-	// Try to get the token from the environment variable.
-	tokenFromEnv := os.Getenv(tokenEnvVar)
-	
 
 	givenTokenHere := os.Getenv("GF_PLUGIN_APP_CLIENT_SECRET")
-	
 	ctxLogger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got GF_PLUGIN_APP_CLIENT_SECRET: %s", givenTokenHere))
 
-
 	var finalToken string
-	if tokenFromEnv != "" {
-		// If the environment variable is set, use its value.
-		finalToken = tokenFromEnv
-	} 
+	
 
-	if authType == "Bearer" && tokenEnvVar == "" {
-		saToken, err := grafanaConfig.PluginAppClientSecret()
-		ctxLogger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got PluginAppClientSecret: %s", saToken))
+	saToken, err := grafanaConfig.PluginAppClientSecret()
+	ctxLogger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got PluginAppClientSecret: %s", saToken))
 
-		if err != nil {
-			ctxLogger.Error("failed to get plugin app client secret", "err", err)
-			http.Error(w, "failed to get plugin app client secret", http.StatusInternalServerError)
-			return
-		}
-		finalToken = saToken
+	if err != nil {
+		ctxLogger.Error("failed to get plugin app client secret", "err", err)
+		http.Error(w, "failed to get plugin app client secret", http.StatusInternalServerError)
+		return
 	}
+	finalToken = saToken
 	ctxLogger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got finalToken: %s", finalToken))
 
 
