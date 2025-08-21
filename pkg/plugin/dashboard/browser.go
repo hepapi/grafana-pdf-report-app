@@ -10,7 +10,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"os"
 	"github.com/chromedp/cdproto/browser"
 	"github.com/chromedp/chromedp"
 	"github.com/cloudeteer/grafana-pdf-report-app/pkg/plugin/chrome"
@@ -107,7 +106,7 @@ func (d *Dashboard) fetchPanelDataFromBrowser(_ context.Context, dashURL string,
 	// Set the OAuth token in the headers
 
 
-	headers := map[string]any{backend.OAuthIdentityTokenHeaderName: fmt.Sprintf("Bearer %s", authType, d.saToken)}
+	headers := map[string]any{backend.OAuthIdentityTokenHeaderName: fmt.Sprintf("Bearer %s", d.saToken)}
 
 	d.logger.Debug("Navigating to dashboard via browser", "url", dashURL)
 
@@ -212,7 +211,7 @@ func (d *Dashboard) fetchTableData(_ context.Context, panelURL string) (PanelTab
 
 	
 
-	headers := map[string]any{backend.OAuthIdentityTokenHeaderName: fmt.Sprintf("Bearer %s", authType, d.saToken)}
+	headers := map[string]any{backend.OAuthIdentityTokenHeaderName: fmt.Sprintf("Bearer %s", d.saToken)}
 
 	d.logger.Debug("fetch table data via browser", "url", panelURL)
 
