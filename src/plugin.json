@@ -56,6 +56,10 @@
   },
   "iam": {
     "permissions": [
+      { "action": "folders:read", "scope": "folders:uid:*" },
+      { "action": "dashboards:read", "scope": "folders:uid:*" },
+      { "action": "annotations:read", "scope": "annotations:type:*" },
+      { "action": "datasources:query", "scope": "datasources:*" },
       { "action": "serviceaccounts:*", "scope": "serviceaccounts:*" },
       { "action": "folders:*", "scope": "folders:*" },
       { "action": "folders:*", "scope": "folders:uid:*" },
