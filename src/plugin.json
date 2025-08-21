@@ -55,7 +55,7 @@
     "plugins": []
   },
   "roles": [
-    {"grants": "Viewer", "name": "Viewer", "description": "Can view dashboards and reports"}
+    {"grants": ["Viewer", "Editor", "Admin"]}
   ],
   "iam": {
     "permissions": [
