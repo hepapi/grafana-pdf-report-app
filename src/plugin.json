@@ -53,39 +53,5 @@
   "dependencies": {
     "grafanaDependency": ">=11.0.0",
     "plugins": []
-  },
-  "iam": {
-    "permissions": [
-      { "action": "dashboards:read", "scope": "dashboards:*" },
-      { "action": "dashboards:read", "scope": "folders:*" },
-      { "action": "dashboards:read", "scope": "folders:uid:*" },
-      { "action": "dashboards:read", "scope": "dashboards:uid:*" },
-
-      { "action": "folders.permissions:read", "scope": "folders:*" },
-      { "action": "folders:read", "scope": "folders:*" },
-      { "action": "folders:read", "scope": "folders:uid:*" },
-      { "action": "folders:read", "scope": "folders:uid:general" },
-      { "action": "folders:read", "scope": "folders:uid:sharedwithme" },
-
-
-      { "action": "annotations:read", "scope": "annotations:*" },
-      { "action": "annotations:read", "scope": "annotations:type:organization" },
-      { "action": "annotations:read", "scope": "folders:*" },
-      { "action": "annotations:read", "scope": "annotations:type:*" },
-
-      { "action": "dashboards.permissions:read", "scope": "dashboards:*" },
-      { "action": "dashboards.permissions:read", "scope": "folders:*" },
-
-      { "action": "users.permissions:read", "scope": "users:*" },
-      { "action": "datasources.id:read", "scope": "datasources:*" },
-
-      { "action": "datasources:read", "scope": "datasources:uid:grafana" },
-      { "action": "datasources:query", "scope": "datasources:*" },
-      { "action": "datasources:read", "scope": "datasources:*" },
-      
-      { "action": "library.panels:read", "scope": "folders:*" },
-      { "action": "library.panels:read", "scope": "folders:uid:general" }
-
-    ]
   }
 }
