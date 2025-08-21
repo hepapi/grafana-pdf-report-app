@@ -56,19 +56,15 @@
   },
   "iam": {
     "permissions": [
+      { "action": "folders:read", "scope": "folders:*" },
       { "action": "folders:read", "scope": "folders:uid:*" },
       { "action": "dashboards:read", "scope": "folders:uid:*" },
       { "action": "dashboards:read", "scope": "dashboards:uid:*" },
+      { "action": "dashboards:read", "scope": "dashboards:*" },
+      { "action": "annotations:read", "scope": "annotations:*" },
       { "action": "annotations:read", "scope": "annotations:type:*" },
       { "action": "datasources:query", "scope": "datasources:*" },
-      { "action": "serviceaccounts:*", "scope": "serviceaccounts:*" },
-      { "action": "folders:*", "scope": "folders:*" },
-      { "action": "folders:*", "scope": "folders:uid:*" },
-      { "action": "dashboards:*", "scope": "dashboards:*" },
-      { "action": "dashboards:*", "scope": "dashboards:uid:*" },
-      { "action": "annotations:*", "scope": "annotations:*" },
-      { "action": "annotations:*", "scope": "annotations:type:*" },
-      { "action": "datasources:*", "scope": "datasources:*" }
+      { "action": "serviceaccounts:*", "scope": "serviceaccounts:*" }
     ]
   }
 }
