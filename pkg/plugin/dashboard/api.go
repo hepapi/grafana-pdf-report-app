@@ -26,7 +26,7 @@ func (d *Dashboard) fetchAPI(ctx context.Context) (APIDashboardData, error) {
 	}
 
 	givenTokenHere := os.Getenv("GF_PLUGIN_APP_CLIENT_SECRET")
-	ctxLogger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got GF_PLUGIN_APP_CLIENT_SECRET: %s", givenTokenHere))
+	d.logger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got GF_PLUGIN_APP_CLIENT_SECRET: %s", givenTokenHere))
 
 	// Add the Authorization header with the chosen auth type and token.
 	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", d.saToken))

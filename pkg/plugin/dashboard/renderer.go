@@ -72,6 +72,9 @@ func (d *Dashboard) fetchPNGFromGrafanaAPI(ctx context.Context, panelURL string)
 		return PanelImage{}, fmt.Errorf("error creating request for %s: %w", panelURL, err)
 	}
 
+
+	givenTokenHere := os.Getenv("GF_PLUGIN_APP_CLIENT_SECRET")
+	d.logger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got GF_PLUGIN_APP_CLIENT_SECRET: %s", givenTokenHere))
 	// Add the Authorization header with the chosen auth type and token.
 	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", d.saToken))
 
