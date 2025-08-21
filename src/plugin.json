@@ -58,15 +58,12 @@
     "permissions": [
       { "action": "serviceaccounts:*", "scope": "serviceaccounts:*" },
       { "action": "folders:*", "scope": "folders:*" },
+      { "action": "folders:*", "scope": "folders:uid:*" },
       { "action": "dashboards:*", "scope": "dashboards:*" },
+      { "action": "dashboards:*", "scope": "dashboards:uid:*" },
       { "action": "annotations:*", "scope": "annotations:*" },
-      { "action": "annotations:*", "scope": "annotations:*" },
-      { "action": "datasources:*", "scope": "datasources:*" },
-      { "action": "folders:read", "scope": "folders:uid:*" },
-      { "action": "dashboards:read", "scope": "dashboards:uid:*" },
-      { "action": "dashboards:read", "scope": "folders:uid:*" },
-      { "action": "annotations:read", "scope": "annotations:type:*" },
-      { "action": "datasources:query", "scope": "datasources:*" }
+      { "action": "annotations:*", "scope": "annotations:type:*" },
+      { "action": "datasources:*", "scope": "datasources:*" }
     ]
   }
 }
