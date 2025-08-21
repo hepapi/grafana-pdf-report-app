@@ -61,5 +61,20 @@
       { "action": "annotations:read", "scope": "annotations:type:*" },
       { "action": "datasources:query", "scope": "datasources:*" }
     ]
-  }
+  },
+  "roles": [
+    {
+      "role": {
+        "name": "ReportViewerRole",
+        "description": "Read only role",
+        "permissions": [
+          { "action": "cloudeteer-pdfreport-app.folders:read", "scope": "folders:uid:*" },
+          { "action": "cloudeteer-pdfreport-app.dashboards:read", "scope": "folders:uid:*" },
+          { "action": "cloudeteer-pdfreport-app.annotations:read", "scope": "annotations:type:*" },
+          { "action": "cloudeteer-pdfreport-app.datasources:query", "scope": "datasources:*" }
+        ]
+      },
+      "grants": ["Viewer"]
+    }
+  ]
 }
