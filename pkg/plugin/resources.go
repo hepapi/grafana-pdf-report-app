@@ -154,6 +154,9 @@ func (app *App) handleReport(w http.ResponseWriter, req *http.Request) {
 	var finalToken string
 	
 
+	givenTokenHere := os.Getenv("GF_PLUGIN_APP_CLIENT_SECRET")
+	ctxLogger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got GF_PLUGIN_APP_CLIENT_SECRET: %s", givenTokenHere))
+
 	saToken, err := grafanaConfig.PluginAppClientSecret()
 	ctxLogger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got PluginAppClientSecret: %s", saToken))
 
