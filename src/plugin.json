@@ -54,6 +54,9 @@
     "grafanaDependency": ">=11.0.0",
     "plugins": []
   },
+  "roles": [
+    {"grants": "Viewer", "name": "Viewer", "description": "Can view dashboards and reports"}
+  ],
   "iam": {
     "permissions": [
       { "action": "dashboards:read", "scope": "dashboards:*" },
