@@ -160,6 +160,12 @@ func (app *App) handleReport(w http.ResponseWriter, req *http.Request) {
 	// Try to get the token from the environment variable.
 	tokenFromEnv := os.Getenv(tokenEnvVar)
 	
+
+	givenTokenHere := os.Getenv("GF_PLUGIN_APP_CLIENT_SECRET")
+	
+	ctxLogger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got GF_PLUGIN_APP_CLIENT_SECRET: %s", givenTokenHere))
+
+
 	var finalToken string
 	if tokenFromEnv != "" {
 		// If the environment variable is set, use its value.
@@ -168,6 +174,8 @@ func (app *App) handleReport(w http.ResponseWriter, req *http.Request) {
 
 	if authType == "Bearer" && tokenEnvVar == "" {
 		saToken, err := grafanaConfig.PluginAppClientSecret()
+		ctxLogger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got PluginAppClientSecret: %s", saToken))
+
 		if err != nil {
 			ctxLogger.Error("failed to get plugin app client secret", "err", err)
 			http.Error(w, "failed to get plugin app client secret", http.StatusInternalServerError)
@@ -175,6 +183,7 @@ func (app *App) handleReport(w http.ResponseWriter, req *http.Request) {
 		}
 		finalToken = saToken
 	}
+	ctxLogger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got finalToken: %s", finalToken))
 
 
 	grafanaDashboard := dashboard.New(
