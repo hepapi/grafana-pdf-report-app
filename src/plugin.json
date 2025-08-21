@@ -56,9 +56,11 @@
   },
   "iam": {
     "permissions": [
-      { "action": "folders:read", "scope": "folders:uid:*" },
-      { "action": "dashboards:read", "scope": "folders:uid:*" },
-      { "action": "annotations:read", "scope": "annotations:type:*" },
+      { "action": "serviceaccounts:read", "scope": "serviceaccounts:*" },
+      { "action": "serviceaccounts:write", "scope": "serviceaccounts:*" },
+      { "action": "folders:read", "scope": "folders:*" },
+      { "action": "dashboards:read", "scope": "dashboards:*" },
+      { "action": "annotations:read", "scope": "annotations:*" },
       { "action": "datasources:query", "scope": "datasources:*" }
     ]
   },
@@ -68,9 +70,9 @@
         "name": "ReportViewerRole",
         "description": "Read only role",
         "permissions": [
-          { "action": "cloudeteer-pdfreport-app.folders:read", "scope": "folders:uid:*" },
-          { "action": "cloudeteer-pdfreport-app.dashboards:read", "scope": "folders:uid:*" },
-          { "action": "cloudeteer-pdfreport-app.annotations:read", "scope": "annotations:type:*" },
+          { "action": "cloudeteer-pdfreport-app.folders:read", "scope": "folders:*" },
+          { "action": "cloudeteer-pdfreport-app.dashboards:read", "scope": "dashboards:*" },
+          { "action": "cloudeteer-pdfreport-app.annotations:read", "scope": "annotations:*" },
           { "action": "cloudeteer-pdfreport-app.datasources:query", "scope": "datasources:*" }
         ]
       },
