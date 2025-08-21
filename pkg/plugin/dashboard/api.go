@@ -10,6 +10,7 @@ import (
 	"os" // Import the os package to read environment variables
 )
 
+// fetchAPI fetches the dashboard data from the Grafana API.
 func (d *Dashboard) fetchAPI(ctx context.Context) (APIDashboardData, error) {
 	dashURL, err := url.Parse(d.grafanaBaseURL)
 	if err != nil {
@@ -30,6 +31,20 @@ func (d *Dashboard) fetchAPI(ctx context.Context) (APIDashboardData, error) {
 
 	// Add the Authorization header with the chosen auth type and token.
 	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", d.saToken))
+	
+	// --- Start of new debug logging ---
+	d.logger.Info("-----------------------------------")
+	d.logger.Info("DEBUG: Preparing to send HTTP request")
+	d.logger.Info(fmt.Sprintf("Method: %s", req.Method))
+	d.logger.Info(fmt.Sprintf("URL: %s", req.URL.String()))
+	d.logger.Info("Headers:")
+	// Iterate over the request headers and log each one.
+	for key, values := range req.Header {
+		d.logger.Info(fmt.Sprintf("  - %s: %s", key, values))
+	}
+	// Note: The request body is nil for a GET request, so there's nothing to log here.
+	d.logger.Info("-----------------------------------")
+	// --- End of new debug logging ---
 
 	// Send the request
 	resp, err := d.httpClient.Do(req) //nolint:bodyclose //https://github.com/timakin/bodyclose/issues/30

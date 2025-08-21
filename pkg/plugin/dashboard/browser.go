@@ -107,15 +107,7 @@ func (d *Dashboard) fetchPanelDataFromBrowser(_ context.Context, dashURL string,
 	// Set the OAuth token in the headers
 
 
-	// Define the environment variable for the auth type.
-	const authTypeEnvVar = "GRAFANA_AUTH_TYPE"
-	// Get the auth type from the environment variable, defaulting to "Bearer".
-	authType := os.Getenv(authTypeEnvVar)
-	if authType == "" {
-		authType = "Bearer"
-	}
-
-	headers := map[string]any{backend.OAuthIdentityTokenHeaderName: fmt.Sprintf("%s %s", authType, d.saToken)}
+	headers := map[string]any{backend.OAuthIdentityTokenHeaderName: fmt.Sprintf("Bearer %s", authType, d.saToken)}
 
 	d.logger.Debug("Navigating to dashboard via browser", "url", dashURL)
 
@@ -218,15 +210,9 @@ func (d *Dashboard) fetchTableData(_ context.Context, panelURL string) (PanelTab
 
 	defer tab.Close(d.logger)
 
-	// Define the environment variable for the auth type.
-	const authTypeEnvVar = "GRAFANA_AUTH_TYPE"
-	// Get the auth type from the environment variable, defaulting to "Bearer".
-	authType := os.Getenv(authTypeEnvVar)
-	if authType == "" {
-		authType = "Bearer"
-	}
+	
 
-	headers := map[string]any{backend.OAuthIdentityTokenHeaderName: fmt.Sprintf("%s %s", authType, d.saToken)}
+	headers := map[string]any{backend.OAuthIdentityTokenHeaderName: fmt.Sprintf("Bearer %s", authType, d.saToken)}
 
 	d.logger.Debug("fetch table data via browser", "url", panelURL)
 
