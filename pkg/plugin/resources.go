@@ -169,6 +169,7 @@ func (app *App) handleReport(w http.ResponseWriter, req *http.Request) {
 
 
 	var finalToken string
+	var token string
 
 
 	grafanaTokenFilePath := os.Getenv("GRAFANA_TOKEN_FILEPATH")
