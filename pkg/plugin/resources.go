@@ -6,12 +6,29 @@ import (
 	"strconv"
 	"strings"
 	"os" // Import the os package to read environment variables
+	"io/ioutil"
 
 	"github.com/cloudeteer/grafana-pdf-report-app/pkg/plugin/dashboard"
 	"github.com/cloudeteer/grafana-pdf-report-app/pkg/plugin/report"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/log"
 )
+
+
+
+// getGrafanaToken reads the file at the specified path and returns its content as a string.
+// It returns an error if the file cannot be read.
+func getGrafanaTokenFromFile(filePath string) (string, error) {
+	// Read the file content.
+	content, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		// Return an empty string and the error if the file cannot be read.
+		return "", fmt.Errorf("could not read file %s: %w", filePath, err)
+	}
+
+	// Convert the byte slice to a string and return it.
+	return string(content), nil
+}
 
 // handleReport handles creating a PDF report from a given dashboard UID
 // GET /api/plugins/cloudeteer-pdfreport-app/resources/report.
@@ -147,21 +164,41 @@ func (app *App) handleReport(w http.ResponseWriter, req *http.Request) {
 
 
 
-
 	givenTokenHere := os.Getenv("GF_PLUGIN_APP_CLIENT_SECRET")
-	ctxLogger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got GF_PLUGIN_APP_CLIENT_SECRET: %s", givenTokenHere))
+	ctxLogger.Debug(fmt.Sprintf(">>>>>>>>>>>>>>>>got GF_PLUGIN_APP_CLIENT_SECRET: %s", givenTokenHere))
+
 
 	var finalToken string
 
-	saToken, err := grafanaConfig.PluginAppClientSecret()
-	ctxLogger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got PluginAppClientSecret: %s", saToken))
 
-	if err != nil {
-		ctxLogger.Error("failed to get plugin app client secret", "err", err)
-		http.Error(w, "failed to get plugin app client secret", http.StatusInternalServerError)
-		return
+	grafanaTokenFilePath := os.Getenv("GRAFANA_TOKEN_FILEPATH")
+
+	if grafanaTokenFilePath == "" {
+		ctxLogger.Info("'GRAFANA_TOKEN_FILEPATH' environment variable is not set, trying PluginAppClientSecret")
+
+		saToken, err := grafanaConfig.PluginAppClientSecret()
+		ctxLogger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got PluginAppClientSecret: %s", saToken))
+
+		if err != nil {
+			ctxLogger.Error("failed to get plugin app client secret", "err", err)
+			http.Error(w, "failed to get plugin app client secret", http.StatusInternalServerError)
+			return
+		}
+		finalToken = saToken
+	} else {
+		ctxLogger.Info(fmt.Sprintf("'GRAFANA_TOKEN_FILEPATH' environment variable is set to: %s, trying to read token from this file", grafanaTokenFilePath))
+		token, err = getGrafanaTokenFromFile(grafanaTokenFilePath)
+		if err != nil {
+			ctxLogger.Error("Error reading token from file:", err)
+			http.Error(w, fmt.Sprintf("Error reading grafana  token from file: %s", grafanaTokenFilePath), http.StatusInternalServerError)
+		} else {
+			finalToken = token
+		}		
 	}
-	finalToken = saToken
+
+
+
+
 	ctxLogger.Info(fmt.Sprintf(">>>>>>>>>>>>>>>>got finalToken: %s", finalToken))
 
 
