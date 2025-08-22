@@ -123,7 +123,7 @@ func (d *Dashboard) fetchPanelDataFromBrowser(_ context.Context, dashURL string,
 	}
 
 	// Check if the page has a scrollbar
-	if err := tab.RunWithTimeout(5*time.Second, chromedp.WaitReady(selPageScrollbar, chromedp.ByQuery)); err != nil {
+	if err := tab.RunWithTimeout(30*time.Second, chromedp.WaitReady(selPageScrollbar, chromedp.ByQuery)); err != nil {
 		return BrowserData{}, fmt.Errorf("error waiting for #page-scrollbar: %w", err)
 	}
 
@@ -144,8 +144,8 @@ func (d *Dashboard) fetchPanelDataFromBrowser(_ context.Context, dashURL string,
 	}
 
 	// Check if the page has a time picker button
-	if err := tab.RunWithTimeout(5*time.Second, chromedp.WaitReady(selTimePickerButton, chromedp.ByQuery)); err != nil {
-		return BrowserData{}, fmt.Errorf("error waiting for #page-scrollbar: %w", err)
+	if err := tab.RunWithTimeout(30*time.Second, chromedp.WaitReady(selTimePickerButton, chromedp.ByQuery)); err != nil {
+		return BrowserData{}, fmt.Errorf("error waiting for #selTimePickerButton: %w", err)
 	}
 
 	// To get the time range, we need to hover over the time picker button
